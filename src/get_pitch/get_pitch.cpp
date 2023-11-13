@@ -24,7 +24,7 @@ Usage:
     get_pitch (-h | --help)
     get_pitch --version
 
-Options:
+Options:  /*Aqui podemos añadir opciones*/
     -h, --help  Show this screen
     --version   Show the version of the project
 
@@ -46,6 +46,11 @@ int main(int argc, const char *argv[]) {
 
 	std::string input_wav = args["<input-wav>"].asString();
 	std::string output_txt = args["<output-txt>"].asString();
+  // float umaxnorm = stof(args["--umaxnorm"].asString()); // Siempre accedemos con la key larga.
+  // float r1norm = stof(args["--r1norm"].asString());
+  // float cclip1 = stof(args["--cclip1"].asString());
+  // float cclip2 = stof(args["--cclip2"].asString());
+  // float powthr = stof(args["--powthr"].asString());
 
   // Read input sound file
   unsigned int rate;
@@ -64,7 +69,15 @@ int main(int argc, const char *argv[]) {
   /// \TODO
   /// Preprocess the input signal in order to ease pitch estimation. For instance,
   /// central-clipping or low pass filtering may be used.
-  
+  // float max = *std::max_element(x.begin(), x.end());
+  // for(int i = 0; i < (int)x.size(); i++) {
+  //   if(abs(x[i]) < cclip1*max) {
+  //     x[i] = 0.0F;
+  //   } 
+  // }
+
+
+
   // Iterate for each frame and save values in f0 vector
   vector<float>::iterator iX;
   vector<float> f0;
@@ -76,6 +89,19 @@ int main(int argc, const char *argv[]) {
   /// \TODO
   /// Postprocess the estimation in order to supress errors. For instance, a median filter
   /// or time-warping may be used.
+  // vector<float> f0_final(f0.size());
+  // vector<float> temp(3);
+  // int i;
+  // for(i = 1; i < (int)(f0.size() - 1); i++) {
+  //   temp = {f0[i-1], f0[i], f0[i+1]};
+  //   auto m = temp.begin() + temp.size()/2;
+  //   std::nth_element(temp.begin(), m, temp.end());
+  //   f0_final[i] = temp[temp.size()/2];
+  // }
+  // f0_final[i] = f0_final[i-1];
+  // f0_final[0] = f0_final[1];
+
+
 
   // Write f0 contour into the output file
   ofstream os(output_txt);

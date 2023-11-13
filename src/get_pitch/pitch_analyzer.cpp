@@ -12,6 +12,16 @@ namespace upc {
 
     for (unsigned int l = 0; l < r.size(); ++l) {
   		/// \TODO Compute the autocorrelation r[l]
+      /** \FET 
+       Implementem        
+       - Inicialitzem...
+       - Acomulem...
+       - Dividim... 
+      */
+      for (unsigned int n = 0; n < x.size()-l; ++n) {
+        r[l] += x[n]*x[n+l];
+      }
+      r[l] = r[l]/x.size();
     }
 
     if (r[0] == 0.0F) //to avoid log() and divide zero 
@@ -50,6 +60,7 @@ namespace upc {
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
+    if(rmaxnorm>0.3) return false;
     return true;
   }
 
@@ -66,6 +77,7 @@ namespace upc {
     //Compute correlation
     autocorrelation(x, r);
 
+
     vector<float>::const_iterator iR = r.begin(), iRMax = iR;
 
     /// \TODO 
@@ -75,6 +87,13 @@ namespace upc {
 	///    - The lag corresponding to the maximum value of the pitch.
     ///	   .
 	/// In either case, the lag should not exceed that of the minimum value of the pitch.
+    for(iR=iRMax=r.begin()+npitch_min; iR<r.begin()+npitch_max; iR++){
+      if(*iR>*iRMax){
+        iRMax=iR;
+      }
+    }
+
+
 
     unsigned int lag = iRMax - r.begin();
 
