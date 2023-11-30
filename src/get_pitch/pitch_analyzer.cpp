@@ -18,6 +18,7 @@ namespace upc {
        - Acomulem...
        - Dividim... 
       */
+      r[1]=0;
       for (unsigned int n = 0; n < x.size()-l; ++n) {
         r[l] += x[n]*x[n+l];
       }
@@ -92,8 +93,6 @@ namespace upc {
         iRMax=iR;
       }
     }
-
-
 
     unsigned int lag = iRMax - r.begin();
 
