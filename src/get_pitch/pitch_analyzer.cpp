@@ -18,7 +18,7 @@ namespace upc {
        - Acomulem...
        - Dividim... 
       */
-      r[1]=0;
+      r[l]=0;
       for (unsigned int n = 0; n < x.size()-l; ++n) {
         r[l] += x[n]*x[n+l];
       }
@@ -61,8 +61,10 @@ namespace upc {
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
-    if(rmaxnorm>0.3) return false;
-    return true;
+    if(rmaxnorm>umaxnorm && r1norm > r1thr && pot > powthr){
+      return false; //para sonoro
+    }
+    return true; //para sordo
   }
 
   float PitchAnalyzer::compute_pitch(vector<float> & x) const {
