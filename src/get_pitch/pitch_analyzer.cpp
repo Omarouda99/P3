@@ -12,6 +12,7 @@ namespace upc {
 
     for (unsigned int l = 0; l < r.size(); ++l) {
   		/// \TODO Compute the autocorrelation r[l]
+<<<<<<< HEAD
       /** \FET
        * Implementem \f r[l] = \frac{1}{N} \sum_0^N ... \f
        * 
@@ -25,6 +26,19 @@ namespace upc {
       }
       r[l]=r[l]/x.size();
       
+=======
+      /** \FET 
+       Implementem        
+       - Inicialitzem...
+       - Acomulem...
+       - Dividim... 
+      */
+      r[l]=0;
+      for (unsigned int n = 0; n < x.size()-l; ++n) {
+        r[l] += x[n]*x[n+l];
+      }
+      r[l] = r[l]/x.size();
+>>>>>>> refs/remotes/origin/Davila-Sillo
     }
 
     if (r[0] == 0.0F) //to avoid log() and divide zero 
@@ -63,9 +77,16 @@ namespace upc {
     /// \TODO Implement a rule to decide whether the sound is voiced or not.
     /// * You can use the standard features (pot, r1norm, rmaxnorm),
     ///   or compute and use other ones.
+<<<<<<< HEAD
     if(rmaxnorm > 0.3) return false;
     
     return true;
+=======
+    if(rmaxnorm>umaxnorm && r1norm > r1thr && pot > powthr){
+      return false; //para sonoro
+    }
+    return true; //para sordo
+>>>>>>> refs/remotes/origin/Davila-Sillo
   }
 
   float PitchAnalyzer::compute_pitch(vector<float> & x) const {
@@ -80,6 +101,7 @@ namespace upc {
 
     //Compute correlation
     autocorrelation(x, r);
+
 
     vector<float>::const_iterator iR = r.begin(), iRMax = iR;
 
