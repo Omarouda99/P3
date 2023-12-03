@@ -42,23 +42,23 @@ Ejercicios básicos
      autocorrelación. Inserte a continuación el código correspondiente.
 
 	```.sh
-	    for(iR=iRMax=r.begin()+npitch_min; iR<r.begin()+npitch_max; iR++){
-	      if(*iR>*iRMax){
-	        iRMax=iR;
-	      }
-	    }
+	for(iR=iRMax=r.begin()+npitch_min; iR<r.begin()+npitch_max; iR++){
+		if(*iR>*iRMax){
+			iRMax=iR;
+ 		}
+	}
  	```
 
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
    
-   Utilitzant 3 valors: l'autocorrelació, la relació R(1)/R(0) i el valor de la potencia.
-   Com que les trames de sons sords tenen l'autocorrelació és molt diferent a la seva energia podem detectar-los fàcilment. També podem detectar trames de silenci ja que la seva energia és baixa i està per sota del threshold que hem marcat.
-   	```.sh
-	    if(rmaxnorm>umaxnorm && r1norm > r1thr && pot > powthr){
-      		return false; //para sonoro
-            }
-    		return true; //para sordo
- 	```
+Utilitzant 3 valors: l'autocorrelació, la relació R(1)/R(0) i el valor de la potencia.
+Com que les trames de sons sords tenen l'autocorrelació és molt diferent a la seva energia podem detectar-los fàcilment. També podem detectar trames de silenci ja que la seva energia és baixa i està per sota del threshold que hem
+marcat.
+
+ 	if(rmaxnorm>umaxnorm && r1norm > r1thr && pot > powthr){
+  		return false; //para sonoro
+    	}
+     	return true; //para sordo
     
 
 - Una vez completados los puntos anteriores, dispondrá de una primera versión del detector de pitch. El 
