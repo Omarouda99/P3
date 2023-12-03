@@ -14,9 +14,22 @@ Ejercicios básicos
   `get_pitch`.
 
    * Complete el cálculo de la autocorrelación e inserte a continuación el código correspondiente.
-   
-   ![image](https://user-images.githubusercontent.com/92537816/143492987-76e6ce60-f657-4099-aaa0-f97ffd33daa7.png)
-
+    ```.sh
+	for (unsigned int l = 0; l < r.size(); ++l) {
+	  		/// \TODO Compute the autocorrelation r[l]
+	      /** \FET 
+	       Implementem        
+	       - Inicialitzem...
+	       - Acomulem...
+	       - Dividim... 
+	      */
+	      r[l]=0;
+	      for (unsigned int n = 0; n < x.size(); ++n) {
+	        r[l] += x[n]*x[n+l];
+	      }
+	      r[l] = r[l]/x.size();
+	    }
+     ```
    * Inserte una gŕafica donde, en un *subplot*, se vea con claridad la señal temporal de un segmento de
      unos 30 ms de un fonema sonoro y su periodo de pitch; y, en otro *subplot*, se vea con claridad la
 	 autocorrelación de la señal y la posición del primer máximo secundario.
