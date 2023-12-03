@@ -29,7 +29,6 @@ Ejercicios básicos
 		      }
 		      r[l] = r[l]/x.size();
 		}
-	     ```
    * Inserte una gŕafica donde, en un *subplot*, se vea con claridad la señal temporal de un segmento de
      unos 30 ms de un fonema sonoro y su periodo de pitch; y, en otro *subplot*, se vea con claridad la
 	 autocorrelación de la señal y la posición del primer máximo secundario.
@@ -132,17 +131,30 @@ Ejercicios de ampliación
   * Técnicas de preprocesado: filtrado paso bajo, *center clipping*, etc.
 	Implementem center-clipping sense offset
  	```.sh
-	    //Frame center-clipping
-	    float max = *std::max_element(x.begin(), x.end());
-	    for(int i = 0; i < (int)x.size(); i++) {
-	      if(abs(x[i]) < cclip) {
-	        x[i] = 0.0F;
-	      }
-	    }
+	float max = *std::max_element(x.begin(), x.end());
+	for(int i = 0; i < (int)x.size(); i++) {
+	    if(abs(x[i]) < cclip1*max) {
+  	      x[i] = 0.0F;
+	    } 
+	}
  	```
 
   * Técnicas de postprocesado: filtro de mediana, *dynamic time warping*, etc.
-   ..............
+    	Implementem el filtre de mitjana
+ 	```.sh
+	vector<float> f0_final(f0.size());
+	vector<float> temp(3);
+	int i;
+	for(i = 1; i < (int)(f0.size() - 1); i++) {
+	    temp = {f0[i-1], f0[i], f0[i+1]};
+	    auto m = temp.begin() + temp.size()/2;
+	    std::nth_element(temp.begin(), m, temp.end());
+	    f0_final[i] = temp[temp.size()/2];
+	}
+	f0_final[i] = f0_final[i-1];
+	f0_final[0] = f0_final[1];
+
+    
   * Optimización **demostrable** de los parámetros que gobiernan el detector, en concreto, de los que
     gobiernan la decisión sonoro/sordo.
   * Cualquier otra técnica que se le pueda ocurrir o encuentre en la literatura.
