@@ -14,22 +14,22 @@ Ejercicios básicos
   `get_pitch`.
 
    * Complete el cálculo de la autocorrelación e inserte a continuación el código correspondiente.
-    ```.sh
-	for (unsigned int l = 0; l < r.size(); ++l) {
-	  		/// \TODO Compute the autocorrelation r[l]
-	      /** \FET 
-	       Implementem        
-	       - Inicialitzem...
-	       - Acomulem...
-	       - Dividim... 
-	      */
-	      r[l]=0;
-	      for (unsigned int n = 0; n < x.size(); ++n) {
-	        r[l] += x[n]*x[n+l];
-	      }
-	      r[l] = r[l]/x.size();
-	    }
-     ```
+	    ```.sh
+		for (unsigned int l = 0; l < r.size(); ++l) {
+		  		/// \TODO Compute the autocorrelation r[l]
+		      /** \FET 
+		       Implementem        
+		       - Inicialitzem...
+		       - Acomulem...
+		       - Dividim... 
+		      */
+		      r[l]=0;
+		      for (unsigned int n = 0; n < x.size(); ++n) {
+		        r[l] += x[n]*x[n+l];
+		      }
+		      r[l] = r[l]/x.size();
+		}
+	     ```
    * Inserte una gŕafica donde, en un *subplot*, se vea con claridad la señal temporal de un segmento de
      unos 30 ms de un fonema sonoro y su periodo de pitch; y, en otro *subplot*, se vea con claridad la
 	 autocorrelación de la señal y la posición del primer máximo secundario.
@@ -47,15 +47,26 @@ Ejercicios básicos
 
    * Determine el mejor candidato para el periodo de pitch localizando el primer máximo secundario de la
      autocorrelación. Inserte a continuación el código correspondiente.
-     
-    ![image](https://user-images.githubusercontent.com/92537816/143685795-a407fe32-98e6-4ede-bcca-27df1fb66ff4.png)
+
+	```.sh
+	    for(iR=iRMax=r.begin()+npitch_min; iR<r.begin()+npitch_max; iR++){
+	      if(*iR>*iRMax){
+	        iRMax=iR;
+	      }
+	    }
+ 	```
 
    * Implemente la regla de decisión sonoro o sordo e inserte el código correspondiente.
    
-   Utilitzant 3 valors de threshold, un per l'energia, un altre per l'autocorrelació normalitzada, i un altre per l'autocorrelació en el màxim.
+   Utilitzant 3 valors: l'autocorrelació, la relació R(1)/R(0) i el valor de la potencia.
    Com que les trames de sons sords tenen l'autocorrelació és molt diferent a la seva energia podem detectar-los fàcilment. També podem detectar trames de silenci ja que la seva energia és baixa i està per sota del threshold que hem marcat.
-   
-    ![image](https://user-images.githubusercontent.com/92537816/143685836-317d63c7-06da-4e16-a71f-11ff35a637d8.png)
+   	```.sh
+	    if(rmaxnorm>umaxnorm && r1norm > r1thr && pot > powthr){
+      		return false; //para sonoro
+            }
+    		return true; //para sordo
+ 	```
+    
 
 - Una vez completados los puntos anteriores, dispondrá de una primera versión del detector de pitch. El 
   resto del trabajo consiste, básicamente, en obtener las mejores prestaciones posibles con él.
@@ -85,9 +96,10 @@ Ejercicios básicos
     y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
 	`pitch_db/train`..
 	
-	Amb paràmetres optimitzats i sense pre ni postprocessat, el nostre sistema de detecció de Pitch té una puntuació de 90.86%
+	Amb paràmetres optimitzats i sense pre ni postprocessat, el nostre sistema de detecció de Pitch té una puntuació de 91.12%
 	
-	![Alt text](image.png)
+	![image](https://github.com/Omarouda99/P3/assets/99822243/20b603c4-430b-41cb-9e0d-f4fdad3f4726)
+
 
    * Inserte una gráfica en la que se vea con claridad el resultado de su detector de pitch junto al del
      detector de Wavesurfer. Aunque puede usarse Wavesurfer para obtener la representación, se valorará
@@ -108,8 +120,8 @@ Ejercicios de ampliación
   * Inserte un *pantallazo* en el que se vea el mensaje de ayuda del programa y un ejemplo de utilización
     con los argumentos añadidos.
     
-    Incorporem els paràmetres que gobernen la decisió voiced/unvoiced. 
-    ![Alt text](image-1.png)
+    ![image](https://github.com/Omarouda99/P3/assets/99822243/53d022f6-8172-4ca8-87d0-e90583e2b969)
+
    
 
 - Implemente las técnicas que considere oportunas para optimizar las prestaciones del sistema de detección
@@ -118,15 +130,19 @@ Ejercicios de ampliación
   Entre las posibles mejoras, puede escoger una o más de las siguientes:
 
   * Técnicas de preprocesado: filtrado paso bajo, *center clipping*, etc.
-  
-  Implementem center-clipping sense offset i filtre pas baix amb freqüència de tall de 2kHz
-  ![image](https://user-images.githubusercontent.com/92537816/144077286-ff0149f9-229c-4414-a02c-7e960cb66855.png)
-  ![image](https://user-images.githubusercontent.com/92537816/144077494-296f7ae6-f596-46a4-ba66-d87be46dc0e1.png)
+	Implementem center-clipping sense offset
+ 	```.sh
+	    //Frame center-clipping
+	    float max = *std::max_element(x.begin(), x.end());
+	    for(int i = 0; i < (int)x.size(); i++) {
+	      if(abs(x[i]) < cclip) {
+	        x[i] = 0.0F;
+	      }
+	    }
+ 	```
 
   * Técnicas de postprocesado: filtro de mediana, *dynamic time warping*, etc.
-  
-  ![image](https://user-images.githubusercontent.com/92537816/144077631-d6b78042-e02b-4eb2-aa78-f34581624b61.png)
-
+   ..............
   * Optimización **demostrable** de los parámetros que gobiernan el detector, en concreto, de los que
     gobiernan la decisión sonoro/sordo.
   * Cualquier otra técnica que se le pueda ocurrir o encuentre en la literatura.
