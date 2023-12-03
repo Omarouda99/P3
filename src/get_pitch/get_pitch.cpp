@@ -25,8 +25,8 @@ Usage:
     get_pitch --version
 
 Options:
-    -m FLOAT, --umaxnorm = FLOAT  Long-term autocorrelation threshold [default: 0.4]
-    -r FLOAT, --r1norm = FLOAT  R(1)/R(0) autocorrelation threshold [default: 0.6]
+    -m FLOAT, --umaxnorm = FLOAT  Long-term autocorrelation threshold [default: 0.38]
+    -r FLOAT, --r1norm = FLOAT  R(1)/R(0) autocorrelation threshold [default: 0.59]
     -1 FLOAT, --cclip1 FLOAT  Whole signal Center-clipping threshold [default: 0.025]
     -2 FLOAT, --cclip2 FLOAT  Frame Center-clipping threshold [default: 0.008]
     -p FLOAT, --powthr FLOAT  Power threshold [default: -55]

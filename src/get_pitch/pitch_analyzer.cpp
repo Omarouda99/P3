@@ -19,7 +19,7 @@ namespace upc {
        - Dividim... 
       */
       r[l]=0;
-      for (unsigned int n = 0; n < x.size()-l; ++n) {
+      for (unsigned int n = 0; n < x.size(); ++n) {
         r[l] += x[n]*x[n+l];
       }
       r[l] = r[l]/x.size();
@@ -34,10 +34,14 @@ namespace upc {
       return;
 
     window.resize(frameLen);
-
+    float a=25/46;
     switch (win_type) {
     case HAMMING:
       /// \TODO Implement the Hamming window
+
+      for(unsigned int i=0; i<frameLen; i++){
+        window[i]=a+(1-a)*cos((2*M_PI*i)/(frameLen-1));
+      }
       break;
     case RECT:
     default:
@@ -70,6 +74,19 @@ namespace upc {
   float PitchAnalyzer::compute_pitch(vector<float> & x) const {
     if (x.size() != frameLen)
       return -1.0F;
+
+    //Frame center-clipping
+    float max = *std::max_element(x.begin(), x.end());
+    for(int i = 0; i < (int)x.size(); i++) {
+      if(abs(x[i]) < cclip) {
+        x[i] = 0.0F;
+      }
+    }
+
+    //Frame normalization
+    max = *std::max_element(x.begin(), x.end());
+    for (int i = 0; i < (int)x.size(); i++)
+      x[i] /= max;
 
     //Window input frame
     for (unsigned int i=0; i<x.size(); ++i)
