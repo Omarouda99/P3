@@ -29,6 +29,7 @@ Ejercicios básicos
 
 	 NOTA: es más que probable que tenga que usar Python, Octave/MATLAB u otro programa semejante para
 	 hacerlo. Se valorará la utilización de la librería matplotlib de Python.
+
 Per generar aquesta gràfica hem utilitzat el codi anomenat autocorrelation.py
     ![image](https://github.com/Omarouda99/P3/assets/99822243/d5a52bc0-401b-450c-bf44-2388027a98a8)
 
