@@ -1,26 +1,40 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import soundfile as sf
 
-data, samplerate = sf.read("./fonema.wav")
-t = np.arange(0, len(signal))/samplerate
+fm = 200/3
 
-corr = np.correlate(data,data,'full') / len(data)
-corr = corr[int(corr.size/2):]
+# Leer el archivo de la señal
+signal_file = 'sonoro.txt'
+signal = np.loadtxt(signal_file)
 
-min_index = np.argmin(corr)
-max_index = np.argmax(corr[min_index:])
-max_value = np.max(corr[min_index:])
-fig, axs = plt.subplots(2)
-      
-axs[0].plot(t, data)
-axs[1].plot(t, corr)
-axs[1].plot((min_index+max_index)*1000/samplerate,max_value,'ro', label='Temporal index = {}ms'.format((min_index+max_index)*1000/samplerate)) #MOSTRAR EL MÁXIMO DE LA AUTOCORRELACIÓN
+# Leer el archivo de la autocorrelación
+autocorr_file = 'correlation.txt'
+autocorr = np.loadtxt(autocorr_file)
 
-axs[0].set_title('Voiced frame')
-axs[1].set_title('Voiced frame autocorrelation')
-axs[1].set_xlabel('time (ms)')
+# Definir el eje de tiempo
+t = np.arange(len(signal)) / fm  
+
+# Definir el periodo de pitch
+period = np.argmax(autocorr[50:100]) + 50  # Buscar el máximo entre las muestras 50 y 100
+pitch_period = period / fm  # Convertir a tiempo en segundos
+
+# Crear el subplot
+fig, axs = plt.subplots(2, 1)
+
+# Plot de la señal y el pitch period
+axs[0].plot(t, signal, label='Señal sonora')
+axs[0].set_xlabel('Tiempo')
+axs[0].set_xlim(0,3)
+axs[0].set_ylabel('Amplitud')
+axs[0].legend()
+
+# Plot de la autocorrelación y el primer máximo secundario
+axs[1].plot(t[:len(autocorr)], autocorr, label='Autocorrelación')
+axs[1].axvline(x=t[50 + np.argmax(autocorr[50:100])], color='r', linestyle='--', label='Primer máximo secundario')
+axs[1].set_xlabel('Tiempo')
+axs[1].set_xlim(0,3)
+axs[1].set_ylabel('Autocorrelación')
 axs[1].legend()
 
-fig.tight_layout()
+# Mostrar el gráfico
 plt.show()
