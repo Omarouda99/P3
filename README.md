@@ -82,13 +82,14 @@ marcat.
 		ilustrativa del resultado de ambos estimadores.
   Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará el uso de alternativas de mayor calidad (particularmente Python).
 
+	Per generar aquesta gràfica hem utilitzat el codi anomenat pitch.py
   ![image](https://github.com/Omarouda99/P3/assets/99822243/babc5cc9-3775-46a2-b4f5-d79813de85aa)
   
   * Optimice los parámetros de su sistema de detección de pitch e inserte una tabla con las tasas de error
     y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
 	`pitch_db/train`..
 	
-	Amb paràmetres optimitzats i sense pre ni postprocessat, el nostre sistema de detecció de Pitch té una puntuació de 91.12%
+	Amb paràmetres optimitzats, el nostre sistema de detecció de Pitch té una puntuació de 91.12%
 	
 	![image](https://github.com/Omarouda99/P3/assets/99822243/20b603c4-430b-41cb-9e0d-f4fdad3f4726)   	
 	
