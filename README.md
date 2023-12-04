@@ -58,14 +58,16 @@ marcat.
 - Una vez completados los puntos anteriores, dispondrá de una primera versión del detector de pitch. El 
   resto del trabajo consiste, básicamente, en obtener las mejores prestaciones posibles con él.
 
-  * Utilice el programa `wavesurfer` para analizar las condiciones apropiadas para determinar si un
-    segmento es sonoro o sordo. 
+  * Utilice el programa `wavesurfer` para analizar las condiciones apropiadas para determinar si un segmento es sonoro o sordo. 
 	
 	  - Inserte una gráfica con la detección de pitch incorporada a `wavesurfer` y, junto a ella, los 
 	    principales candidatos para determinar la sonoridad de la voz: el nivel de potencia de la señal
 		(r[0]), la autocorrelación normalizada de uno (r1norm = r[1] / r[0]) y el valor de la
 		autocorrelación en su máximo secundario (rmaxnorm = r[lag] / r[0]).
-		
+	Puede considerar, también, la conveniencia de usar la tasa de cruces por cero.
+
+	Recuerde configurar los paneles de datos para que el desplazamiento de ventana sea el adecuado, que en esta práctica es de 15 ms.
+
 	Creant un .out, podem separar les columnes per extreure els nostres paràmetres amb la següent ordre:
 	![Alt text](image-2.png)
 
@@ -77,21 +79,19 @@ marcat.
 
       - Use el detector de pitch implementado en el programa `wavesurfer` en una señal de prueba y compare
 	    su resultado con el obtenido por la mejor versión de su propio sistema.  Inserte una gráfica
-		ilustrativa del resultado de ambos detectores.
+		ilustrativa del resultado de ambos estimadores.
+  Aunque puede usar el propio Wavesurfer para obtener la representación, se valorará el uso de alternativas de mayor calidad (particularmente Python).
+
+  ![image](https://github.com/Omarouda99/P3/assets/99822243/babc5cc9-3775-46a2-b4f5-d79813de85aa)
+  
   * Optimice los parámetros de su sistema de detección de pitch e inserte una tabla con las tasas de error
     y el *score* TOTAL proporcionados por `pitch_evaluate` en la evaluación de la base de datos 
 	`pitch_db/train`..
 	
 	Amb paràmetres optimitzats i sense pre ni postprocessat, el nostre sistema de detecció de Pitch té una puntuació de 91.12%
 	
-	![image](https://github.com/Omarouda99/P3/assets/99822243/20b603c4-430b-41cb-9e0d-f4fdad3f4726)
-
-
-   * Inserte una gráfica en la que se vea con claridad el resultado de su detector de pitch junto al del
-     detector de Wavesurfer. Aunque puede usarse Wavesurfer para obtener la representación, se valorará
-	 el uso de alternativas de mayor calidad (particularmente Python).
-   	
-	![image](https://github.com/Omarouda99/P3/assets/99822243/babc5cc9-3775-46a2-b4f5-d79813de85aa)
+	![image](https://github.com/Omarouda99/P3/assets/99822243/20b603c4-430b-41cb-9e0d-f4fdad3f4726)   	
+	
 
 Ejercicios de ampliación
 ------------------------
